@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova — Modern Solutions for Growing Teams</title>
+    <meta name="description" content="Streamline your workflow, collaborate effortlessly, and scale with confidence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --accent: #0ea5e9;
+            --accent-light: #38bdf8;
+            --bg: #ffffff;
+            --bg-alt: #f8fafc;
+            --bg-dark: #0f172a;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --text-light: #94a3b8;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
+            --shadow-glow: 0 0 40px rgba(99,102,241,0.15);
+            --radius-sm: 8px;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- Navigation --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            transition: box-shadow 0.3s ease;
+        }
+        .navbar.scrolled {
+            box-shadow: var(--shadow);
+        }
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo-icon {
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: var(--primary);
+            transition: width 0.2s;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 50px rgba(99,102,241,0.25), var(--shadow-lg);
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        .btn-ghost:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(99,102,241,0.04);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        .hamburger {
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            position: relative;
+            transition: all 0.3s;
+        }
+        .hamburger::before, .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            transition: all 0.3s;
+        }
+        .hamburger::before { top: -7px; }
+        .hamburger::after { top: 7px; }
+        .mobile-menu-btn.active .hamburger {
+            background: transparent;
+        }
+        .mobile-menu-btn.active .hamburger::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+        .mobile-menu-btn.active .hamburger::after {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 72px; left: 0; right: 0; bottom: 0;
+            background: var(--bg);
+            z-index: 999;
+            padding: 32px 24px;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .mobile-nav.active {
+            display: flex;
+        }
+        .mobile-nav a {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 160px 0 100px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+        }
+        .hero-bg {
+            position: absolute;
+            top: -200px; right: -100px;
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-bg-2 {
+            position: absolute;
+            bottom: -100px; left: -100px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(14,165,233,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(14,165,233,0.1));
+            border: 1px solid rgba(99,102,241,0.15);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+        .hero-badge-dot {
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 480px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-light);
+        }
+        .hero-stat {
+            text-align: left;
+        }
+        .hero-stat-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+        .hero-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: 24px;
+            border: 1px solid var(--border-light);
+            width: 100%;
+            max-width: 460px;
+            position: relative;
+        }
+        .hero-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .hero-card-avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .hero-card-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .hero-card-info span {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        .hero-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .hero-card-row {
+            display: flex;
+            gap: 12px;
+        }
+        .hero-card-item {
+            flex: 1;
+            padding: 16px;
+            border-radius: var(--radius);
+            background: var(--bg-alt);
+        }
+        .hero-card-item .label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .hero-card-item .value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 4px;
+            color: var(--text);
+        }
+        .hero-card-item .value.up { color: #10b981; }
+        .hero-card-item .value.down { color: #ef4444; }
+        .hero-card-bar {
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border-light);
+            margin-top: 12px;
+            overflow: hidden;
+        }
+        .hero-card-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 72%;
+        }
+        .hero-card-footer {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .hero-card-tag {
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: rgba(99,102,241,0.08);
+            color: var(--primary);
+        }
+        .floating-element {
+            position: absolute;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 12px 16px;
+            border: 1px solid var(--border-light);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: float 4s ease-in-out infinite;
+        }
+        .floating-element-1 {
+            top: -20px; right: -20px;
+            animation-delay: 0s;
+        }
+        .floating-element-2 {
+            bottom: 40px; left: -40px;
+            animation-delay: 1s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .floating-icon {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+        .floating-icon.green { background: #d1fae5; color: #10b981; }
+        .floating-icon.blue { background: #dbeafe; color: #3b82f6; }
+
+        /* --- Trust Bar --- */
+        .trust {
+            padding: 48px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .trust-label {
+            text-align: center;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            margin-bottom: 32px;
+            font-weight: 500;
+        }
+        .trust-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+        .trust-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-light);
+            opacity: 0.5;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        .trust-logo:hover {
+            opacity: 1;
+        }
+
+        /* --- Features --- */
+        .features {
+            padding: 100px 0;
+            background: var(--bg-alt);
+        }
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 64px;
+        }
+        .section-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(99,102,241,0.08);
+            color: var(--primary);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .feature-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        .feature-icon {
+            width: 52px; height: 52px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 24px;
+        }
+        .feature-icon.blue { background: #eff6ff; }
+        .feature-icon.purple { background: #f5f3ff; }
+        .feature-icon.teal { background: #f0fdfa; }
+        .feature-icon.orange { background: #fff7ed; }
+        .feature-icon.rose { background: #fff1f2; }
+        .feature-icon.emerald { background: #ecfdf5; }
+        .feature-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* --- How It Works --- */
+        .how-it-works {
+            padding: 100px 0;
+        }
+        .steps {
+            display: flex;
+            gap: 32px;
+            position: relative;
+        }
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 40px; left: 60px; right: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--border), var(--primary), var(--accent), var(--border));
+            z-index: 0;
+        }
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .step-number {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0 auto 24px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .step:hover .step-number {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+            transform: scale(1.05);
+        }
+        .step h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .step p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- Testimonials --- */
+        .testimonials {
+            padding: 100px 0;
+            background: var(--bg-alt);
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .testimonial-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            border: 1px solid var(--border-light);
+            position: relative;
+        }
+        .testimonial-card::before {
+            content: '"';
+            font-family: 'Outfit', sans-serif;
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.15;
+            position: absolute;
+            top: 8px; left: 20px;
+            line-height: 1;
+        }
+        .testimonial-stars {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+        .testimonial-stars span {
+            color: #fbbf24;
+            font-size: 1.1rem;
+        }
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .testimonial-avatar {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .testimonial-author-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .testimonial-author-info span {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* --- CTA --- */
+        .cta {
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e1b4b 50%, var(--bg-dark) 100%);
+            border-radius: var(--radius-xl);
+            margin: 0 24px;
+        }
+        .cta-inner {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 80px 24px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .cta-inner h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 16px;
+        }
+        .cta-inner p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-white {
+            background: white;
+            color: var(--primary-dark);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+        }
+        .btn-outline-white {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .btn-outline-white:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .cta-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(99,102,241,0.1);
+            pointer-events: none;
+        }
+        .cta-decoration-1 {
+            width: 300px; height: 300px;
+            top: -100px; right: -60px;
+        }
+        .cta-decoration-2 {
+            width: 200px; height: 200px;
+            bottom: -60px; left: -40px;
+            background: rgba(14,165,233,0.08);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background: var(--bg-dark);
+            color: white;
+            padding: 80px 0 32px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+        .footer-brand .logo {
+            color: white;
+            margin-bottom: 16px;
+        }
+        .footer-brand p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            max-width: 280px;
+        }
+        .footer-col h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: rgba(255,255,255,0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col li {
+            margin-bottom: 12px;
+        }
+        .footer-col a {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover {
+            color: white;
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-bottom p {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.85rem;
+        }
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+        .footer-social a {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 2.75rem; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta .btn-ghost { display: none; }
+            .mobile-menu-btn { display: block; }
+            .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+            .hero { padding: 120px 0 60px; }
+            .hero h1 { font-size: 2.25rem; }
+            .hero-visual { order: -1; }
+            .features-grid { grid-template-columns: 1fr; }
+            .steps {
+                flex-direction: column;
+                gap: 48px;
+            }
+            .steps::before { display: none; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .cta-inner h2 { font-size: 1.75rem; }
+            .hero-stats { gap: 24px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.9rem; }
+            .section-header h2 { font-size: 1.75rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .floating-element { display: none; }
+            .hero-card { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">N</div>
+                Nova
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="#" class="btn btn-ghost">Sign In</a>
+                <a href="#" class="btn btn-primary">Get Started</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <div class="hamburger"></div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a href="#" class="btn btn-primary" style="margin-top: 16px;">Get Started</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-bg-2"></div>
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="hero-badge-dot"></span>
+                        Now with AI-powered insights
+                    </div>
+                    <h1>Build better products, faster.</h1>
+                    <p>Streamline your workflow, collaborate effortlessly, and scale with confidence. Nova gives your team the tools to ship exceptional work.</p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary">Start Free Trial →</a>
+                        <a href="#" class="btn btn-ghost">Watch Demo</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="hero-stat-number">12k+</div>
+                            <div class="hero-stat-label">Active Teams</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-number">99.9%</div>
+                            <div class="hero-stat-label">Uptime SLA</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-number">4.9/5</div>
+                            <div class="hero-stat-label">User Rating</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="hero-card-header">
+                            <div class="hero-card-avatar">JD</div>
+                            <div class="hero-card-info">
+                                <h4>Project Alpha</h4>
+                                <span>Updated 2m ago</span>
+                            </div>
+                        </div>
+                        <div class="hero-card-body">
+                            <div class="hero-card-row">
+                                <div class="hero-card-item">
+                                    <div class="label">Tasks Done</div>
+                                    <div class="value up">+24%</div>
+                                </div>
+                                <div class="hero-card-item">
+                                    <div class="label">Team Velocity</div>
+                                    <div class="value up">+18%</div>
+                                </div>
+                            </div>
+                            <div class="hero-card-row">
+                                <div class="hero-card-item">
+                                    <div class="label">Sprint Progress</div>
+                                    <div class="value">72%</div>
+                                    <div class="hero-card-bar"><div class="hero-card-bar-fill"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-card-footer">
+                            <span class="hero-card-tag">Design</span>
+                            <span class="hero-card-tag">Engineering</span>
+                            <span class="hero-card-tag">QA</span>
+                        </div>
+                    </div>
+                    <div class="floating-element floating-element-1">
+                        <div class="floating-icon green">✓</div>
+                        <span>Build passed</span>
+                    </div>
+                    <div class="floating-element floating-element-2">
+                        <div class="floating-icon blue">↗</div>
+                        <span>+2,847 users</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust">
+        <div class="container">
+            <div class="trust-label">Trusted by innovative teams worldwide</div>
+            <div class="trust-logos">
+                <span class="trust-logo">Stripe</span>
+                <span class="trust-logo">Notion</span>
+                <span class="trust-logo">Figma</span>
+                <span class="trust-logo">Linear</span>
+                <span class="trust-logo">Vercel</span>
+                <span class="trust-logo">Railway</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Features</span>
+                <h2>Everything you need to move fast</h2>
+                <p>Powerful tools designed to help your team collaborate, automate, and deliver at scale.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon blue">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Optimized for speed with sub-100ms response times. Your workflow never slows down, no matter how big your team grows.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon purple">🔒</div>
+                    <h3>Enterprise Security</h3>
+                    <p>Bank-grade encryption, SSO, and SOC 2 compliance out of the box. Your data stays protected at every layer.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon teal">🤖</div>
+                    <h3>AI-Powered</h3>
+                    <p>Smart suggestions, auto-categorization, and predictive insights that help your team work smarter every day.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon orange">🔗</div>
+                    <h3>Seamless Integrations</h3>
+                    <p>Connect with 100+ tools you already use. Slack, GitHub, Jira, Figma, and more — all in one place.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon rose">📊</div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Beautiful dashboards and custom reports that surface the metrics that matter most to your business.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon emerald">🌐</div>
+                    <h3>Global Infrastructure</h3>
+                    <p>Deploy across 30+ regions with automatic failover. Your users get a fast experience, everywhere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">How It Works</span>
+                <h2>Get started in three easy steps</h2>
+                <p>From signup to shipping, Nova removes friction at every step.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Sign Up</h3>
+                    <p>Create your workspace in under 60 seconds. No credit card required to get started.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Invite Your Team</h3>
+                    <p>Add teammates with a single link. Set permissions and roles in a few clicks.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Ship Faster</h3>
+                    <p>Collaborate, iterate, and launch. Watch your velocity climb week over week.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Testimonials</span>
+                <h2>Loved by teams everywhere</h2>
+                <p>See why thousands of companies trust Nova to power their workflows.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">Nova completely transformed how our team works. We cut our release cycle by 40% in the first month alone.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SK</div>
+                        <div class="testimonial-author-info">
+                            <h4>Sarah Kim</h4>
+                            <span>CTO, TechFlow</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">The analytics dashboard is incredible. I finally have visibility into every project without chasing down status updates.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MR</div>
+                        <div class="testimonial-author-info">
+                            <h4>Marcus Rivera</h4>
+                            <span>VP Product, Orbit Labs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">We evaluated 12 tools before choosing Nova. It was the only one that scaled with us from 5 people to 200.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">EA</div>
+                        <div class="testimonial-author-info">
+                            <h4>Emily Akintola</h4>
+                            <span>Engineering Lead, NaijaScale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <div class="cta-bg">
+                <div class="cta-decoration cta-decoration-1"></div>
+                <div class="cta-decoration cta-decoration-2"></div>
+            </div>
+            <div class="cta-inner">
+                <h2>Ready to move faster?</h2>
+                <p>Join 12,000+ teams already shipping better work with Nova. Start your free 14-day trial today.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-white">Start Free Trial</a>
+                    <a href="#" class="btn btn-outline-white">Talk to Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">N</div>
+                        Nova
+                    </a>
+                    <p>The modern platform for teams that ship. Built for speed, designed for scale.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Nova Inc. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Twitter">𝕏</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                    <a href="#" aria-label="GitHub">gh</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close mobile nav on link click
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+
+</body>
+</html>
